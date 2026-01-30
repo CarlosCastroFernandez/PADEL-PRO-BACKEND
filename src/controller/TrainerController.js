@@ -24,14 +24,16 @@ const postTrainerByEmail = async (req, res) => {
 const createTrainer = async (req, res) => {
 
     try {
-        const { name, lastName, email, password, priceByClass, experienceYears } = req.body
+        const { name, lastName, email,description, sex, password, priceByClass, experienceYears } = req.body
 
         const newUser = await trainerModel.create({
             name,
             lastName,
             email,
             password: await bcrypt.hash(password, 10),
+            description,
             priceByClass,
+            sex,
             experienceYears
 
         });
@@ -45,4 +47,20 @@ const createTrainer = async (req, res) => {
 
 
 }
-module.exports={postTrainerByEmail , createTrainer}
+const allTrainer = async (req, res) => {
+    try {
+        
+         let listTrainer=[];
+         listTrainer = await trainerModel.find();
+        if (listTrainer!==null){
+              return res.status(200).json({message:"login exitoso",status:"SUCCESS",data:listTrainer
+              })
+        } else{
+            return res.status(200).json({message:"ERROR NULLPOINTER",status:"ERROR"})
+            
+        }
+    } catch (e) {
+        return res.status(500).json({message:e,status:"ERROR"})
+    }
+}
+module.exports={postTrainerByEmail , createTrainer, allTrainer}
