@@ -1,4 +1,4 @@
-const { mongo } = require("mongoose");
+const  mongo  = require("mongoose");
 const classModel = require("../model/ClassModel");
 
 const createClass = async (req, res) => {
@@ -90,8 +90,8 @@ const getAllClassByStudent = async (req, res) => {
       return res.status(400).json({ status: "ERROR", message: "studentId no válido" });
     }
 
-    const studentObjectId = mongo.Types.ObjectId(studentId);
-
+    const studentObjectId = new mongo.Types.ObjectId(studentId);
+    console.log("HOLAA "+studentObjectId)
     const classByAlumno = await classModel
       .find({ students: studentObjectId })
       .populate("trainer")  
@@ -104,4 +104,27 @@ const getAllClassByStudent = async (req, res) => {
     return res.status(500).json({ status: "ERROR", message: e.message || e });
   }
 };
-module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent };
+const getAllClassByTrainer2 = async (req, res) => {
+  const { trainerId } = req.params;
+
+  try {
+    if (!mongo.Types.ObjectId.isValid(trainerId)) {
+      return res.status(400).json({ status: "ERROR", message: "studentId no válido" });
+    }
+
+    const trainerObjectId = new mongo.Types.ObjectId(trainerId);
+    console.log("HOLAA "+trainerObjectId)
+    const classByTrainer = await classModel
+      .find({ trainer: trainerObjectId })
+      .populate("students")
+      .populate("trainer")
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      data: classByTrainer
+    });
+  } catch (e) {
+    return res.status(500).json({ status: "ERROR", message: e.message || e });
+  }
+};
+module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2 };
