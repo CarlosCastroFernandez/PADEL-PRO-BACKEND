@@ -4,31 +4,26 @@ const classModel = require("../model/ClassModel");
 const createClass = async (req, res) => {
   try {
     const { date, trainer, students } = req.body;
-    const checkClass= await classModel.findOne({
-      date:date,
-      trainer:trainer
+    console.log(date);
+    const checkClass = await classModel.findOne({
+      date: date,
+      trainer: trainer,
     });
-    let newStudents=[];
-    if(checkClass!==null){
-
-      newStudents = students.filter(
-    s => !checkClass.students.includes(s)
-  );
-  if(newStudents.length>0){
-     checkClass.students.push(...newStudents)
-     await checkClass.save();
-    console.log("SUBIDO EN EL ARRAY")
-
-  }
-     
-    }else if(checkClass===null){
+    let newStudents = [];
+    if (checkClass !== null) {
+      newStudents = students.filter((s) => !checkClass.students.includes(s));
+      if (newStudents.length > 0) {
+        checkClass.students.push(...newStudents);
+        await checkClass.save();
+        console.log("SUBIDO EN EL ARRAY");
+      }
+    } else if (checkClass === null) {
       const newClass = await classModel.create({
-      date,
-      trainer,
-      students,
-    });
-      console.log("Se crea clase nueva")
-
+        date,
+        trainer,
+        students,
+      });
+      console.log("Se crea clase nueva");
     }
 
     return res.status(200).json({ status: "SUCCESS", data: "EXITOSO" });
@@ -57,39 +52,56 @@ const getAllClassByTrainer = async (req, res) => {
         listaResult.push(classe.date.getHours());
       }
     });
-   return res.status(200).json({ status: "SUCCESS", data: listaResult });
+    return res.status(200).json({ status: "SUCCESS", data: listaResult });
   } catch (e) {
     return res.status(500).json({ message: e, status: "ERROR" });
   }
 };
 
 const getAllClassByDate = async (req, res) => {
-
-  const {fecha,trainerId}=req.params
-  let listaHours=[]
+  const { fecha, trainerId } = req.params;
+  let listaHours = [];
   try {
     const clases = await classModel.find({
-      trainer:trainerId,
-  $expr: {
-    $eq: [
-      { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
-      fecha
-    ]
-  }
- 
-});
- console.log(clases);
- clases.forEach((classes)=>{
-  if (classes.students.length>=4){
-    const hour=classes.date.getHours();
-    const minute=classes.date.getMinutes()
-    listaHours.push(hour + ":"+ minute.toString().padStart(2,"0"));
-  }
- })
+      trainer: trainerId,
+      $expr: {
+        $eq: [{ $dateToString: { format: "%Y-%m-%d", date: "$date" } }, fecha],
+      },
+    });
+    console.log(clases);
+    clases.forEach((classes) => {
+      if (classes.students.length >= 4) {
+        const hour = classes.date.getHours();
+        const minute = classes.date.getMinutes();
+        listaHours.push(hour + ":" + minute.toString().padStart(2, "0"));
+      }
+    });
 
-   return res.status(200).json({ status: "SUCCESS", data: listaHours });
+    return res.status(200).json({ status: "SUCCESS", data: listaHours });
   } catch (e) {
     return res.status(500).json({ message: e, status: "ERROR" });
   }
 };
-module.exports = { createClass, getAllClassByTrainer,getAllClassByDate };
+const getAllClassByStudent = async (req, res) => {
+  const { studentId } = req.params;
+
+  try {
+    if (!mongo.Types.ObjectId.isValid(studentId)) {
+      return res.status(400).json({ status: "ERROR", message: "studentId no válido" });
+    }
+
+    const studentObjectId = mongo.Types.ObjectId(studentId);
+
+    const classByAlumno = await classModel
+      .find({ students: studentObjectId })
+      .populate("trainer")  
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      data: classByAlumno
+    });
+  } catch (e) {
+    return res.status(500).json({ status: "ERROR", message: e.message || e });
+  }
+};
+module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent };
