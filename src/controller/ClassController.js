@@ -127,4 +127,21 @@ const getAllClassByTrainer2 = async (req, res) => {
     return res.status(500).json({ status: "ERROR", message: e.message || e });
   }
 };
-module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2 };
+const getAllClass = async (req, res) => {
+
+  try {
+ 
+    const classes = await classModel
+      .find()
+      .populate("students")
+      .populate("trainer")
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      data: classes
+    });
+  } catch (e) {
+    return res.status(500).json({ status: "ERROR", message: e.message || e });
+  }
+};
+module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2, getAllClass };

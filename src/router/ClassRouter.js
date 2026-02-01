@@ -1,5 +1,5 @@
 const express = require("express");
-const {  createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2 } = require("../controller/ClassController");
+const {  createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2, getAllClass } = require("../controller/ClassController");
 
 const router=express.Router();
 
@@ -9,5 +9,6 @@ router.get("/getAllAvaliable/:idTrainer",getAllClassByTrainer)
 router.get("/getAllAvaliableDate/:fecha/:trainerId",getAllClassByDate)
 router.get("/getAllClassByStudent/:studentId",getAllClassByStudent);
 router.get("/getAllClassByTrainer/:trainerId",getAllClassByTrainer2);
+router.get("/getAllClasses",getAllClass);
 
 module.exports=router;
