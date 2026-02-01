@@ -25,7 +25,7 @@ const createTrainer = async (req, res) => {
 
     try {
         const { name, lastName, email,description, sex, password, priceByClass, experienceYears } = req.body
-
+        
         const newUser = await trainerModel.create({
             name,
             lastName,
