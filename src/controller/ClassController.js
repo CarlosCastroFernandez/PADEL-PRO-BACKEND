@@ -144,4 +144,19 @@ const getAllClass = async (req, res) => {
     return res.status(500).json({ status: "ERROR", message: e.message || e });
   }
 };
-module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2, getAllClass };
+const deleteClassById = async (req, res) => {
+    const { classId } = req.params;
+  try {
+ 
+    const classes = await classModel
+      .findByIdAndDelete(classId)
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      data: classes
+    });
+  } catch (e) {
+    return res.status(500).json({ status: "ERROR", message: e.message || e });
+  }
+};
+module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2, getAllClass,deleteClassById };
