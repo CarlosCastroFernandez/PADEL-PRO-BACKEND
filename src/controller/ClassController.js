@@ -3,7 +3,8 @@ const classModel = require("../model/ClassModel");
 
 const createClass = async (req, res) => {
   try {
-    const { date, trainer, students } = req.body;
+    const { trainer, students } = req.body;
+    const {date}=req.payload
     console.log(date);
     const checkClass = await classModel.findOne({
       date: date,
@@ -11,11 +12,16 @@ const createClass = async (req, res) => {
     });
     let newStudents = [];
     if (checkClass !== null) {
-      newStudents = students.filter((s) => !checkClass.students.includes(s));
-      if (newStudents.length > 0) {
-        checkClass.students.push(...newStudents);
+      console.log(checkClass)
+      newStudents = !(checkClass.students.includes(students[0]))
+      console.log(newStudents)
+      if (newStudents && checkClass.students.length<4) {
+         
+        checkClass.students.push(students[0]);
         await checkClass.save();
         console.log("SUBIDO EN EL ARRAY");
+      }else{
+        return res.status(200).json({ status: "SUCCESS", data: "NO EXITOSO" });
       }
     } else if (checkClass === null) {
       const newClass = await classModel.create({
@@ -38,14 +44,12 @@ const getAllClassByTrainer = async (req, res) => {
     fechaHoy.setHours(0, 0, 0, 0);
     const listaResult = [];
     const listaFechas = await classModel.find({ trainer: idTrainer });
-    console.log(listaFechas);
     const listaFechasByDay = listaFechas.filter((clase) => {
       const claseDate = new Date(clase.date);
       claseDate.setHours(0, 0, 0, 0);
       return claseDate >= fechaHoy;
     });
 
-    console.log(listaFechasByDay);
 
     const clasesAvaliable = listaFechasByDay.forEach((classe) => {
       if (classe.students.lenght >= 4) {
@@ -68,9 +72,10 @@ const getAllClassByDate = async (req, res) => {
         $eq: [{ $dateToString: { format: "%Y-%m-%d", date: "$date" } }, fecha],
       },
     });
-    console.log(clases);
+
     clases.forEach((classes) => {
       if (classes.students.length >= 4) {
+   
         const hour = classes.date.getHours();
         const minute = classes.date.getMinutes();
         listaHours.push(hour + ":" + minute.toString().padStart(2, "0"));

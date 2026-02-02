@@ -43,5 +43,19 @@ const postStudentById = async (req, res) => {
         return res.status(500).json({message:e,status:"ERROR"})
     }
 }
+const getStudentById = async (req, res) => {
+    try {
+        
+        const { email } = req.params;
+        const user = await studentModel.findOne({email});
+        if (!user){
+            return res.status(200).json({message:"No hay usuario por este email",status:"ERROR"})
+        } else{
+            return res.status(200).json({message:"login exitoso",status:"SUCCESS",data:user})
+        }
+    } catch (e) {
+        return res.status(500).json({message:e,status:"ERROR"})
+    }
+}
 
-module.exports={postStudentById , createStudent}
+module.exports={postStudentById , createStudent,getStudentById}

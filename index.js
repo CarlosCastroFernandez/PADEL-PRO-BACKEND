@@ -5,6 +5,7 @@ const connectToDataBase = require("./src/db/Connect");
 const studentRouter=require("./src/router/StudentRouter");
 const trainerRouter=require("./src/router/TrainerRouter");
 const classRouter=require("./src/router/ClassRouter");
+const adminRouter=require("./src/router/AdminRouter");
 
 
 connectToDataBase();
@@ -22,6 +23,7 @@ app.use(cors({
 app.use("/student",studentRouter)
 app.use("/trainer",trainerRouter)
 app.use("/class",classRouter)
+app.use("/admin",adminRouter)
 
 app.listen(PORT,()=>{
     console.log("Escuchando... en el puerto "+PORT);
