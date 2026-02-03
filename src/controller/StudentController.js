@@ -58,4 +58,33 @@ const getStudentById = async (req, res) => {
     }
 }
 
-module.exports={postStudentById , createStudent,getStudentById}
+const modifyStudent = async (req, res) => {
+
+    try {
+        const { name, lastName, studentId } = req.body
+
+        const newUser = await studentModel.findByIdAndUpdate(
+            studentId,
+            {
+                name:name,
+                lastName:lastName
+         
+
+        },{new:true});
+        if (newUser){
+        //await sendEmail("bubachico@gmail.com","Welcome to PADEL-PRO!!",`<h2> Bienvenido ${name}</h2><p>Gracias por llegar a registrate</p>`)
+        return res.status(200).json({status:"SUCCESS",data:newUser})
+        }else{
+            return res.status(500).json({message:"No existe este id de padelero",status:"ERROR"})
+        }
+
+
+    } catch (e) {
+         return res.status(500).json({message:e,status:"ERROR"})
+    }
+
+
+}
+
+
+module.exports={postStudentById , createStudent,getStudentById,modifyStudent}

@@ -1,10 +1,10 @@
-const  mongo  = require("mongoose");
+const mongo = require("mongoose");
 const classModel = require("../model/ClassModel");
 
 const createClass = async (req, res) => {
   try {
     const { trainer, students } = req.body;
-    const {date}=req.payload
+    const { date } = req.payload;
     console.log(date);
     const checkClass = await classModel.findOne({
       date: date,
@@ -12,15 +12,14 @@ const createClass = async (req, res) => {
     });
     let newStudents = [];
     if (checkClass !== null) {
-      console.log(checkClass)
-      newStudents = !(checkClass.students.includes(students[0]))
-      console.log(newStudents)
-      if (newStudents && checkClass.students.length<4) {
-         
+      console.log(checkClass);
+      newStudents = !checkClass.students.includes(students[0]);
+      console.log(newStudents);
+      if (newStudents && checkClass.students.length < 4) {
         checkClass.students.push(students[0]);
         await checkClass.save();
         console.log("SUBIDO EN EL ARRAY");
-      }else{
+      } else {
         return res.status(200).json({ status: "SUCCESS", data: "NO EXITOSO" });
       }
     } else if (checkClass === null) {
@@ -50,7 +49,6 @@ const getAllClassByTrainer = async (req, res) => {
       return claseDate >= fechaHoy;
     });
 
-
     const clasesAvaliable = listaFechasByDay.forEach((classe) => {
       if (classe.students.lenght >= 4) {
         listaResult.push(classe.date.getHours());
@@ -75,7 +73,6 @@ const getAllClassByDate = async (req, res) => {
 
     clases.forEach((classes) => {
       if (classes.students.length >= 4) {
-   
         const hour = classes.date.getHours();
         const minute = classes.date.getMinutes();
         listaHours.push(hour + ":" + minute.toString().padStart(2, "0"));
@@ -92,18 +89,20 @@ const getAllClassByStudent = async (req, res) => {
 
   try {
     if (!mongo.Types.ObjectId.isValid(studentId)) {
-      return res.status(400).json({ status: "ERROR", message: "studentId no válido" });
+      return res
+        .status(400)
+        .json({ status: "ERROR", message: "studentId no válido" });
     }
 
     const studentObjectId = new mongo.Types.ObjectId(studentId);
-    console.log("HOLAA "+studentObjectId)
+    console.log("HOLAA " + studentObjectId);
     const classByAlumno = await classModel
       .find({ students: studentObjectId })
-      .populate("trainer")  
+      .populate("trainer");
 
     return res.status(200).json({
       status: "SUCCESS",
-      data: classByAlumno
+      data: classByAlumno,
     });
   } catch (e) {
     return res.status(500).json({ status: "ERROR", message: e.message || e });
@@ -114,54 +113,82 @@ const getAllClassByTrainer2 = async (req, res) => {
 
   try {
     if (!mongo.Types.ObjectId.isValid(trainerId)) {
-      return res.status(400).json({ status: "ERROR", message: "studentId no válido" });
+      return res
+        .status(400)
+        .json({ status: "ERROR", message: "studentId no válido" });
     }
 
     const trainerObjectId = new mongo.Types.ObjectId(trainerId);
-    console.log("HOLAA "+trainerObjectId)
+    console.log("HOLAA " + trainerObjectId);
     const classByTrainer = await classModel
       .find({ trainer: trainerObjectId })
       .populate("students")
-      .populate("trainer")
+      .populate("trainer");
 
     return res.status(200).json({
       status: "SUCCESS",
-      data: classByTrainer
+      data: classByTrainer,
     });
   } catch (e) {
     return res.status(500).json({ status: "ERROR", message: e.message || e });
   }
 };
 const getAllClass = async (req, res) => {
-
   try {
- 
     const classes = await classModel
       .find()
       .populate("students")
-      .populate("trainer")
+      .populate("trainer");
 
     return res.status(200).json({
       status: "SUCCESS",
-      data: classes
+      data: classes,
     });
   } catch (e) {
     return res.status(500).json({ status: "ERROR", message: e.message || e });
   }
 };
 const deleteClassById = async (req, res) => {
-    const { classId } = req.params;
+  const { classId } = req.params;
   try {
- 
-    const classes = await classModel
-      .findByIdAndDelete(classId)
+    const classes = await classModel.findByIdAndDelete(classId);
 
     return res.status(200).json({
       status: "SUCCESS",
-      data: classes
+      data: classes,
     });
   } catch (e) {
     return res.status(500).json({ status: "ERROR", message: e.message || e });
   }
 };
-module.exports = { createClass, getAllClassByTrainer, getAllClassByDate, getAllClassByStudent, getAllClassByTrainer2, getAllClass,deleteClassById };
+const deleteStudentByClass = async (req, res) => {
+  try {
+    const { classId, studentId } = req.params;
+    console.log(classId)
+    const classe = await classModel.findById(classId);
+    if (!classe) {
+      return res
+        .status(500)
+        .json({ status: "ERROR", message: "La clase no existe" });
+    } else {
+      classe.students = classe.students.filter(
+        (element) => element._id.toString() !== studentId,
+      );
+      await classe.save();
+      return res.status(200).json({
+        status: "SUCCESS",
+        data: classe,
+      });
+    }
+  } catch (e) {}
+};
+module.exports = {
+  createClass,
+  getAllClassByTrainer,
+  getAllClassByDate,
+  getAllClassByStudent,
+  getAllClassByTrainer2,
+  getAllClass,
+  deleteClassById,
+  deleteStudentByClass
+};
