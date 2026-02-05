@@ -1,41 +1,56 @@
 const mongo = require("mongoose");
 const classModel = require("../model/ClassModel");
 
+
+
 const createClass = async (req, res) => {
   try {
     const { trainer, students } = req.body;
     const { date } = req.payload;
-    console.log(date);
+
+    const trainerObjectId = new mongo.Types.ObjectId(trainer);
+    const studentObjectId = new mongo.Types.ObjectId(students[0]);
+
     const checkClass = await classModel.findOne({
-      date: date,
-      trainer: trainer,
+      date,
+      trainer: trainerObjectId,
     });
-    let newStudents = [];
-    if (checkClass !== null) {
-      console.log(checkClass);
-      newStudents = !checkClass.students.includes(students[0]);
-      console.log(newStudents);
-      if (newStudents && checkClass.students.length < 4) {
-        checkClass.students.push(students[0]);
+
+    if (checkClass) {
+      const studentExists = checkClass.students.some((id) =>
+        id.equals(studentObjectId)
+      );
+
+      if (!studentExists && checkClass.students.length < 4) {
+        checkClass.students.push(studentObjectId);
         await checkClass.save();
-        console.log("SUBIDO EN EL ARRAY");
       } else {
-        return res.status(200).json({ status: "SUCCESS", data: "NO EXITOSO" });
+        return res.status(200).json({
+          status: "NO EXITOSO",
+          data: "NO EXITOSO",
+        });
       }
-    } else if (checkClass === null) {
-      const newClass = await classModel.create({
+    } else {
+      await classModel.create({
         date,
-        trainer,
-        students,
+        trainer: trainerObjectId,
+        students: [studentObjectId],
       });
-      console.log("Se crea clase nueva");
     }
 
-    return res.status(200).json({ status: "SUCCESS", data: "EXITOSO" });
+    return res.status(200).json({
+      status: "SUCCESS",
+      data: "EXITOSO",
+    });
   } catch (e) {
-    return res.status(500).json({ message: e, status: "ERROR" });
+    console.error("CREATE CLASS ERROR:", e);
+    return res.status(500).json({
+      status: "ERROR",
+      message: e.message,
+    });
   }
 };
+
 const getAllClassByTrainer = async (req, res) => {
   try {
     const { idTrainer } = req.params;
