@@ -6,6 +6,7 @@ const studentRouter=require("./src/router/StudentRouter");
 const trainerRouter=require("./src/router/TrainerRouter");
 const classRouter=require("./src/router/ClassRouter");
 const adminRouter=require("./src/router/AdminRouter");
+const tokenRouter=require("./src/router/TokenRouter");
 
 
 connectToDataBase();
@@ -17,13 +18,14 @@ app.use(express.json());
 app.use(cors({
     origin:"http://localhost:5173",
     methods:["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
-    allowedHeaders:["Content-Type"]
+    allowedHeaders:["Content-Type","auth-token"]
 }));
 
 app.use("/student",studentRouter)
 app.use("/trainer",trainerRouter)
 app.use("/class",classRouter)
 app.use("/admin",adminRouter)
+app.use("/token",tokenRouter)
 
 app.listen(PORT,()=>{
     console.log("Escuchando... en el puerto "+PORT);

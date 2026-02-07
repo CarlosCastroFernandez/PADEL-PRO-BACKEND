@@ -1,6 +1,7 @@
 const studentModel = require("../model/StudentModel");
 const bcrypt = require("bcrypt");
 const { sendEmail } = require("../services/emailServices");
+const generateToke = require("../utils/auth");
 
 
 const createStudent = async (req, res) => {
@@ -37,7 +38,14 @@ const postStudentById = async (req, res) => {
             if (!(await bcrypt.compare(password,user.password))){
                 return res.status(200).json({message:"Contraseña errónea",status:"ERROR"})
             }
-            return res.status(200).json({message:"login exitoso",status:"SUCCESS",data:user})
+            const payload={
+                _id:user._id,
+                email:user.email,
+
+            }
+            const token=generateToke(payload,false)
+            const tokenRefresh=generateToke(payload,true)
+            return res.status(200).json({message:"login exitoso",status:"SUCCESS",data:user,token,tokenRefresh})
         }
     } catch (e) {
         return res.status(500).json({message:e,status:"ERROR"})
