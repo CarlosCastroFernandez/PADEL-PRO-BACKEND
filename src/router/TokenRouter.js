@@ -7,7 +7,7 @@ const newToken = require("../controller/TokenCOntroller");
 const router=express.Router();
 
 
-router.get("/newToken",verifyToken,newToken)
+router.get("/newToken/:status",verifyToken,newToken)
 
 
 module.exports=router;

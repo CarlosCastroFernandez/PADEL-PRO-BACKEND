@@ -3,11 +3,11 @@ const jwt =require("jsonwebtoken");
 const generateToke=(payload,isRefresToken)=>{
     if (isRefresToken){
         return jwt.sign(payload,process.env.SECRET_TOKEN_REFRESH,{
-            expiresIn:"60min"
+            expiresIn:"1min"
         });
     }
        return jwt.sign(payload,process.env.SECRET_TOKEN,{
-            expiresIn:"5s"
+            expiresIn:"1min"
         });
 }
 

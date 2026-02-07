@@ -15,9 +15,10 @@ const verifyToken = (req, res, next) => {
             const payload = jwt.verify(authToken, process.env.SECRET_TOKEN_REFRESH);
 
             req.payload = payload;
+            console.log("PASO "+req.payload)
             next();
         } catch (error) {
-            res.status(403).send({status:"EXPIRED"});
+            res.status(403).json({status:"EXPIRED"});
         }
 
     }

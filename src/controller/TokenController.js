@@ -7,6 +7,7 @@ const newToken = async (req, res) => {
     const { status } = req.params;
 
     const payload = req.payload;
+    console.log(payload)
     let newToken = {};
     let newPayload = {};
     switch (status) {
@@ -15,25 +16,25 @@ const newToken = async (req, res) => {
         if (!student)
           return res
             .status("404")
-            .send({ status: "Failed", message: "No existe Usuario" });
+            .json({ status: "Failed", message: "No existe Usuario" });
         newPayload = {
           _id: student._id,
           email: student.email,
         };
         newToken = generateToke(newPayload, false);
-        return res.status(200).send({ status: "Success", tokenNew: newToken });
+        return res.status(200).json({ status: "Success", tokenNew: newToken });
       case "trainer":
         const trainer = await trainerModel.findById(payload._id);
         if (!trainer)
           return res
             .status("404")
-            .send({ status: "Failed", message: "No existe Usuario" });
+            .json({ status: "Failed", message: "No existe Usuario" });
         newPayload = {
           _id: trainer._id,
           email: trainer.email,
         };
         newToken = generateToke(newPayload, false);
-        return res.status(200).send({ status: "Success", tokenNew: newToken });
+        return res.status(200).json({ status: "Success", tokenNew: newToken });
 
       case "admin":
         const admin = await adminModel.findById(payload._id);
