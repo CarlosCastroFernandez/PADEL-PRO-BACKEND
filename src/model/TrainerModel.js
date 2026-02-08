@@ -28,6 +28,15 @@ const trainerSchema = new Schema({
         minlength: [6, "Al menos seis caracteres"]
 
     },
+    description:{
+        type:String,
+        required:true
+    },
+    sex:{
+        type:String,
+        required:true,
+        enum:["h","m"]
+    },
     priceByClass:{
         type:Number,
         min:1
