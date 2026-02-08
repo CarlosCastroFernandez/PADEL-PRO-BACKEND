@@ -1,10 +1,5 @@
 use("padel-pro");
 
-db.Trainer.insertOne({
-  name: "Carlos",
-  lastName: "Martínez",
-  email: "admin@padel.com",
-  password: "123456",
-  priceByClass:45,
-  experienceYears:2
-});
+db.Admin.dropIndexes()
+//db.Admin.deleteMany({})
+//db.Admin.createIndex({ email: 1 }, { unique: true })

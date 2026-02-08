@@ -18,7 +18,7 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: [true, "El email es obligatorio"],
-        unique: [true, "El email ya existe"],
+        unique:true,
         trim: true
 
     },
@@ -30,6 +30,6 @@ const userSchema = new Schema({
     }
 });
 
-const adminModel = mongo.model("Admin", userSchema, "admins")
+const adminModel = mongo.model("Admin", userSchema, "Admin")
 
 module.exports=adminModel;
