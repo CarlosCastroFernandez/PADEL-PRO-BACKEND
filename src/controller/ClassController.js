@@ -150,6 +150,7 @@ const getAllClassByTrainer2 = async (req, res) => {
 };
 const getAllClass = async (req, res) => {
   try {
+    console.log("ESTOY LLEGANDO")
     const classes = await classModel
       .find()
       .populate("students")

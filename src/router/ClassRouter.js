@@ -11,8 +11,8 @@ router.get("/getAllAvaliable/:idTrainer",getAllClassByTrainer)
 router.get("/getAllAvaliableDate/:fecha/:trainerId",getAllClassByDate)
 router.get("/getAllClassByStudent/:studentId",getAllClassByStudent);
 router.get("/getAllClassByTrainer/:trainerId",getAllClassByTrainer2);
-router.get("/getAllClasses",getAllClass);
-router.delete("/deleteClassById/:classId",deleteClassById);
-router.delete("/deleteStudentByClass/:classId/:studentId",deleteStudentByClass);
+router.get("/getAllClasses",verifyToken, getAllClass);
+router.delete("/deleteClassById/:classId",verifyToken, deleteClassById);
+router.delete("/deleteStudentByClass/:classId/:studentId",verifyToken, deleteStudentByClass);
 
 module.exports=router;
