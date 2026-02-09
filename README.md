@@ -1,5 +1,11 @@
 ## Proyecto Sin Responsive
 
+### hay un endpoint para crear un admin con esta peticion POST desde postman http://localhost:3000/admin/createAdmin y en el body {
+    "email":"admin@gmail.com",
+    "name":"carlos",
+    "lastName":"castro fernandez",
+    "password":"123456"
+}
 # 🏓 PadelPro – Gestión de Clases y Reservas
 
 PadelPro es una aplicación web desarrollada para la **gestión de clases de pádel**, donde **usuarios (alumnos)**, **entrenadores** y **administradores** tienen diferentes permisos y funcionalidades según su rol.
