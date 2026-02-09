@@ -3,7 +3,7 @@ const { createStudent, postStudentById, getStudentById, modifyStudent } = requir
 const verifyToken = require("../middleware/verify");
 const router=express.Router();
 
-router.post("/findStudentByEmail",/*verifytoken*/postStudentById)
+router.post("/findStudentByEmail",postStudentById)
 router.post("/createStudent",verifyToken, createStudent)
 router.get("/getStudentByEmail/:email",verifyToken, getStudentById)
 router.post("/modifyStudentById",verifyToken, modifyStudent)

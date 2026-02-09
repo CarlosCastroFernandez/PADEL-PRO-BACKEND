@@ -3,7 +3,7 @@ const {getAdminByEmailAndPassword,createAdmin} = require("../controller/AdminCon
 
 const router=express.Router();
 
-router.post("/findAdminByEmail",/*verifytoken*/getAdminByEmailAndPassword);
+router.post("/findAdminByEmail",getAdminByEmailAndPassword);
 
-router.post("/createAdmin",/*verifytoken*/createAdmin);
+router.post("/createAdmin",createAdmin);
 module.exports=router;
