@@ -43,11 +43,6 @@ const getAdminByEmailAndPassword = async (req, res) => {
 const createAdmin = async (req, res) => {
   try {
     const { name, lastName, email, password } = req.body;
-    console.log("DB ACTUAL:", adminModel.db.name);
-    console.log("COLECCIÓN:", adminModel.collection.name);
-    await adminModel.deleteMany({});
-    await adminModel.collection.dropIndexes();
-    //await adminModel.collection.createIndex({ email: 1 }, { unique: true });
 
     const newUser = await adminModel.create({
       name,
@@ -55,7 +50,7 @@ const createAdmin = async (req, res) => {
       email,
       password: await bcrypt.hash(password, 10),
     });
-
+    //Se deja comentado el envio del correo electrónico por si se desea descomentar para implementarlo ya que lo tenemos en las dependencias
     //await sendEmail("bubachico@gmail.com","Welcome to PADEL-PRO!!",`<h2> Bienvenido ${name}</h2><p>Gracias por llegar a registrate</p>`)
     return res.status(200).json({ status: "SUCCESS", data: newUser });
   } catch (e) {
