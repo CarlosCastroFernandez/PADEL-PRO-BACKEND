@@ -1,4 +1,4 @@
-const classModel = require("../model/ClassModel"); // importa tu modelo de clases
+const classModel = require("../model/ClassModel"); 
 const checkStudentAvailability = async (req, res, next) => {
   try {
     const { date, students } = req.body;
@@ -12,7 +12,7 @@ const checkStudentAvailability = async (req, res, next) => {
     if (!date.includes("T")) {
       const arrayHours = date.split("-");
       const year = Number(arrayHours[0]);
-      const month = Number(arrayHours[1]) - 1; // seguro
+      const month = Number(arrayHours[1]) - 1; 
       const day = Number(arrayHours[2]);
       const hour = Number(arrayHours[3].replace(":00", ""));
 
