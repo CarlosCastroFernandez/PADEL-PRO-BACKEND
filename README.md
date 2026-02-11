@@ -114,4 +114,4 @@ http://localhost:3000/admin/createAdmin
   }
 }
 ## Ejecución del proyecto
-Se clona este repo y en la ubicación del proyecto en la consola se pone **npm i** para instalar dependias y luego **npm run start** para levantar el servidor backend
+Se clona este repo y en la ubicación del proyecto en la consola se pone **npm i** para instalar dependias y luego **npm run start** para levantar el servidor backend (para hacer esto hay que tener **node** instalado)
