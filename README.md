@@ -62,7 +62,7 @@ http://localhost:3000/admin/createAdmin
 
 ### 📌 Body (JSON)
 
-```json
+
 {
   "email": "admin@gmail.com",
   "name": "carlos",
@@ -71,7 +71,7 @@ http://localhost:3000/admin/createAdmin
 }
 
 
-## 🚀 Tecnologías Utilizadas
+# 🚀 Tecnologías Utilizadas
 
 ### 🖥️ Frontend
 - **React** — Construcción de interfaces de usuario dinámicas.
