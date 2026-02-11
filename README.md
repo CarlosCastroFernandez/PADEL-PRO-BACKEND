@@ -55,7 +55,7 @@ Tanto alumnos como entrenadores solo pueden ver clases que cumplan esta condici�
 ```js
 classDate >= currentDate
 
-# 🏋️‍♂️ Aplicación Web de Reservas y Entrenadores
+## 🏋️‍♂️ Aplicación Web de Reservas y Entrenadores
 
 Aplicación web desarrollada con **React + Vite** en el frontend y **Node.js + Express** en el backend.  
 El sistema permite la gestión de reservas, visualización de entrenadores, autenticación segura de usuarios y envío de notificaciones por correo electrónico.
