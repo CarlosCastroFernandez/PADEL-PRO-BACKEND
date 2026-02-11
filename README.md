@@ -79,3 +79,6 @@ http://localhost:3000/admin/createAdmin
 - **Vite** — Entorno de desarrollo rápido y optimizado.
 - **HTML5** — Estructura del contenido.
 - **CSS3** — Diseño y estilos visuales.
+
+# Como ejecutar el proyect:
+se abre la ubicación del proyecto y se ejecuta npm run dev comprobando anteriormente si esta desplegado el backend 
