@@ -70,7 +70,7 @@ http://localhost:3000/admin/createAdmin
   "password": "123456"
 }
 
-
+# Tecnologías Usadas
 ### 🌐 Backend
 - **Node.js** — Entorno de ejecución para JavaScript en el servidor.
 - **Express 5** — Framework para la creación de APIs REST.
