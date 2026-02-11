@@ -43,7 +43,7 @@ const createClass = async (req, res) => {
       data: "EXITOSO",
     });
   } catch (e) {
-    console.error("CREATE CLASS ERROR:", e);
+
     return res.status(500).json({
       status: "ERROR",
       message: e.message,
@@ -110,7 +110,7 @@ const getAllClassByStudent = async (req, res) => {
     }
 
     const studentObjectId = new mongo.Types.ObjectId(studentId);
-    console.log("HOLAA " + studentObjectId);
+
     const classByAlumno = await classModel
       .find({ students: studentObjectId })
       .populate("trainer");
@@ -134,7 +134,7 @@ const getAllClassByTrainer2 = async (req, res) => {
     }
 
     const trainerObjectId = new mongo.Types.ObjectId(trainerId);
-    console.log("HOLAA " + trainerObjectId);
+
     const classByTrainer = await classModel
       .find({ trainer: trainerObjectId })
       .populate("students")
@@ -150,7 +150,7 @@ const getAllClassByTrainer2 = async (req, res) => {
 };
 const getAllClass = async (req, res) => {
   try {
-    console.log("ESTOY LLEGANDO")
+
     const classes = await classModel
       .find()
       .populate("students")
@@ -180,7 +180,7 @@ const deleteClassById = async (req, res) => {
 const deleteStudentByClass = async (req, res) => {
   try {
     const { classId, studentId } = req.params;
-    console.log(classId)
+
     const classe = await classModel.findById(classId);
     if (!classe) {
       return res
@@ -196,7 +196,7 @@ const deleteStudentByClass = async (req, res) => {
         data: classe,
       });
     }
-  } catch (e) {}
+  } catch (e) { }
 };
 module.exports = {
   createClass,
