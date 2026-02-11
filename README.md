@@ -71,14 +71,47 @@ http://localhost:3000/admin/createAdmin
 }
 
 
-# 🚀 Tecnologías Utilizadas
+### 🌐 Backend
+- **Node.js** — Entorno de ejecución para JavaScript en el servidor.
+- **Express 5** — Framework para la creación de APIs REST.
+- **MongoDB** — Base de datos NoSQL.
+- **Mongoose** — Modelado y gestión de datos en MongoDB.
 
-### 🖥️ Frontend
-- **React** — Construcción de interfaces de usuario dinámicas.
-- **JavaScript (ES6+)** — Lenguaje principal del proyecto.
-- **Vite** — Entorno de desarrollo rápido y optimizado.
-- **HTML5** — Estructura del contenido.
-- **CSS3** — Diseño y estilos visuales.
+---
 
-# Como ejecutar el proyect:
-se abre la ubicación del proyecto y se ejecuta npm run dev comprobando anteriormente si esta desplegado el backend 
+## 🔐 Seguridad y Autenticación
+
+- **bcrypt** — Encriptación de contraseñas.
+- **jsonwebtoken (JWT)** — Autenticación basada en tokens.
+- **crypto** — Funciones criptográficas adicionales.
+- **dotenv** — Gestión segura de variables de entorno.
+- **cors** — Permite peticiones entre distintos dominios.
+
+---
+
+## 📧 Servicios Integrados
+
+- **nodemailer** — Envío automático de correos electrónicos (confirmaciones y notificaciones).
+
+---
+
+## 📦 Dependencias
+
+
+{
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.5",
+    "nodemailer": "^7.0.12"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
+## Ejecución del proyecto
+Se clona este repo y en la ubicación del proyecto en la consola se pone **npm i** para instalar dependias y luego **npm run start** para levantar el servidor backend
