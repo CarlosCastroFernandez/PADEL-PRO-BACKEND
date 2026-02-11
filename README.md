@@ -55,20 +55,4 @@ Tanto alumnos como entrenadores solo pueden ver clases que cumplan esta condici�
 ```js
 classDate >= currentDate
 
-## 🏋️‍♂️ Aplicación Web de Reservas y Entrenadores
-
-Aplicación web desarrollada con **React + Vite** en el frontend y **Node.js + Express** en el backend.  
-El sistema permite la gestión de reservas, visualización de entrenadores, autenticación segura de usuarios y envío de notificaciones por correo electrónico.
-
----
-
-## 🚀 Tecnologías Utilizadas
-
-### 🖥️ Frontend
-- **React** — Construcción de interfaces de usuario dinámicas.
-- **JavaScript (ES6+)** — Lenguaje principal del proyecto.
-- **Vite** — Entorno de desarrollo rápido y optimizado.
-- **HTML5** — Estructura del contenido.
-- **CSS3** — Diseño y estilos visuales.
-
 
