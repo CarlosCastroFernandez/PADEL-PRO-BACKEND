@@ -7,7 +7,7 @@ const newToken = async (req, res) => {
     const { status } = req.params;
 
     const payload = req.payload;
-    console.log(payload)
+
     let newToken = {};
     let newPayload = {};
     switch (status) {
@@ -53,4 +53,4 @@ const newToken = async (req, res) => {
     return res.status(500).send({ status: "Failed", message: e.message });
   }
 };
-module.exports=newToken
+module.exports = newToken

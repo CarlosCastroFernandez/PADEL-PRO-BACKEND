@@ -27,6 +27,30 @@ const createStudent = async (req, res) => {
 
 }
 
+const createSinceAdmin = async (req, res) => {
+
+    try {
+        const { name, lastName, email, password } = req.body
+
+        const newUser = await studentModel.create({
+            name,
+            lastName,
+            email,
+            password: await bcrypt.hash(password, 10)
+
+        });
+
+       //await sendEmail("bubachico@gmail.com","Welcome to PADEL-PRO!!",`<h2> Bienvenido ${name}</h2><p>Gracias por llegar a registrate</p>`)
+        return res.status(200).json({status:"SUCCESS",data:newUser})
+
+    } catch (e) {
+         return res.status(500).json({message:e,status:"ERROR"})
+    }
+
+
+}
+
+
 const postStudentById = async (req, res) => {
     try {
         
@@ -95,4 +119,4 @@ const modifyStudent = async (req, res) => {
 }
 
 
-module.exports={postStudentById , createStudent,getStudentById,modifyStudent}
+module.exports={postStudentById , createStudent,getStudentById,modifyStudent,createSinceAdmin}

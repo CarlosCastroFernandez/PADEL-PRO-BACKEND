@@ -7,7 +7,7 @@ const getAdminByEmailAndPassword = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await adminModel.findOne({ email });
-    console.log(user);
+
     if (!user) {
       return res
         .status(200)
@@ -18,7 +18,7 @@ const getAdminByEmailAndPassword = async (req, res) => {
           .status(200)
           .json({ message: "Contraseña errónea", status: "ERROR" });
       }
-      console.log("LLEGO")
+
       const payload = {
         _id: user._id,
         email: user.email,
@@ -36,7 +36,7 @@ const getAdminByEmailAndPassword = async (req, res) => {
         });
     }
   } catch (e) {
-    console.log(e.message)
+
     return res.status(500).json({ message: e, status: "ERROR" });
   }
 };
