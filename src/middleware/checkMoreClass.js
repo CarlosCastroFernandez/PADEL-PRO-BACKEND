@@ -30,7 +30,7 @@ const checkStudentAvailability = async (req, res, next) => {
 
     if (conflictClass) {
       return res.status(400).json({
-        status: "ERROR",
+        status: "CONFLICTO",
         data: "NO EXITOSO",
       });
     }

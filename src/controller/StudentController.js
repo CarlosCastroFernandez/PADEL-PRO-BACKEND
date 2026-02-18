@@ -118,5 +118,46 @@ const modifyStudent = async (req, res) => {
 
 }
 
+const getAllUsers = async (req, res) => {
+    try {
+        
+        const listUser = await studentModel.find();
+        if (listUser.length===0||listUser===null){
+            return res.status(200).json({message:"No hay usuarioos",status:"ERROR"})
+        } else{
+            return res.status(200).json({message:"login exitoso",status:"SUCCESS",data:listUser})
+        }
+    } catch (e) {
+        return res.status(500).json({message:e,status:"ERROR"})
+    }
+}
+const deleteStudentById = async (req, res) => {
+    try {
+        const { id } = req.params; 
 
-module.exports={postStudentById , createStudent,getStudentById,modifyStudent,createSinceAdmin}
+        console.log(id)
+        const deletedUser = await studentModel.findByIdAndDelete(id);
+
+        if (!deletedUser) {
+            return res.status(404).json({
+                message: "No se encontró al padelero",
+                status: "ERROR"
+            });
+        }
+
+        return res.status(200).json({
+            message: "Paadelero eliminado correctamente",
+            status: "SUCCESS",
+            data: deletedUser
+        });
+    } catch (e) {
+        return res.status(500).json({
+            message: e.message,
+            status: "ERROR"
+        });
+    }
+}
+
+
+
+module.exports={postStudentById , createStudent,getStudentById,modifyStudent,createSinceAdmin,getAllUsers,deleteStudentById}

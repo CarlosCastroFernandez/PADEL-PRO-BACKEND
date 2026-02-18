@@ -15,11 +15,13 @@ const createClass = async (req, res) => {
       date,
       trainer: trainerObjectId,
     });
+         console.log(checkClass)
 
     if (checkClass) {
       const studentExists = checkClass.students.some((id) =>
         id.equals(studentObjectId)
       );
+      console.log(checkClass)
 
       if (!studentExists && checkClass.students.length < 4) {
         checkClass.students.push(studentObjectId);
